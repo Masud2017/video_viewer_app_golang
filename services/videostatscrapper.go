@@ -16,9 +16,7 @@ import (
 	"viewer_app.com/packages/utils"
 )
 
-
 var envFile, _ = godotenv.Read(".env")
-
 
 
 type Scrapper struct {}
