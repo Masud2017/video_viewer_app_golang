@@ -5,7 +5,9 @@ import (
 	"viewer_app.com/packages/controllers"
 )
 
-func SetupRouter()  *gin.Engine {
+type Router struct {}
+
+func (router Router) GetRouter()  *gin.Engine {
 	router := gin.Default();
 
 	router.GET("/ping", controllers.Index)
