@@ -1,15 +1,26 @@
 package utils
 
 import (
-	// "regexp"
-	"fmt"
+	"regexp"
 	"strings"
 )
 
-func GetInstaGramShortCodeFromUrl(url string) string {
-	// pattern := "(?:https?:\\/\\/)?(?:www.)?instagram.com\\/?([a-zA-Z0-9\\.\\_\\-]+)?\\/([p]+)?([reel]+)?([tv]+)?([stories]+)?\\/([a-zA-Z0-9\\-\\_\\.]+)\\/?([0-9]+)?"
+func GetTiktokVideoId(url string) string {
+	pattern := "\\/video\\/(\\w+)"
+	pattern_compiled,_ := regexp.Compile(pattern)
+	res := pattern_compiled.FindString(url)
+	videoId := strings.Split(res,"/")[2]
 
-	fmt.Println(strings.Split(url,"/")[4])
+	return videoId
+}
 
-	return ""
+
+func GetFilteredJsonData(jsonDataUnfiltered string) string {
+	pattern := "<\\/script>"
+	pattern_compiled, _ := regexp.Compile(pattern)
+	mactchedIdxArr := pattern_compiled.FindStringSubmatchIndex(jsonDataUnfiltered)
+
+	firstOccuranceIdx := mactchedIdxArr[0]
+
+	return jsonDataUnfiltered[:firstOccuranceIdx]
 }

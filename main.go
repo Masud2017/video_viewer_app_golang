@@ -9,9 +9,10 @@ import (
 func main() {
 	processor := services.UrlProcessor{}
 	scrapper := services.Scrapper {}
-	urlInfo := processor.ProcessUrl("https://www.instagram.com/reel/CoX3tHCOEUS/")
+	urlInfo := processor.ProcessUrl("https://www.tiktok.com/@juan_and_lonely/video/7243914257526541573?is_from_webapp=1&sender_device=pc")
 
 	fmt.Println(urlInfo)
+
 
 	// scrapper.ScrapeYoutubeData(&urlInfo)
 
@@ -22,7 +23,9 @@ func main() {
 	// fmt.Println("Value of title is ; ",urlInfo.Title)
 	// fmt.Println("Value of channel name is ; ",urlInfo.Channel_name)
 
-	scrapper.ScrapeInstagramData(&urlInfo)
+	// scrapper.ScrapeInstagramData(&urlInfo)
+
+	scrapper.ScrapeTiktokData(&urlInfo)
 
 	// router := routers.SetupRouter();
 	// router.Run(":5555") // listen and serve on 0.0.0.0:8080

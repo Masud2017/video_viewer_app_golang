@@ -3,7 +3,6 @@ package services
 import (
 	"github.com/anaskhan96/soup"
 	"os"
-
 	"fmt"
 	"net/http"
 	"io"
@@ -11,7 +10,10 @@ import (
 	"strconv"
 	"strings"
 	"encoding/json"
-
+	"github.com/playwright-community/playwright-go"
+	"log"
+	"regexp"
+	"viewer_app.com/packages/utils"
 )
 
 
@@ -108,9 +110,73 @@ func (scrapper Scrapper) ScrapeInstagramData(urlInfo *UrlInfo) {
 	fmt.Println(fullName)
 
 	urlInfo.Channel_name = fullName
-	urlInfo.Title = nil
+	urlInfo.Title = ""
+
 }
 
 func (scrapper Scrapper) ScrapeTiktokData(urlInfo *UrlInfo) { 
+	err := playwright.Install()
+	playWrightInstance, err := playwright.Run()
 
+
+	if (err != nil) {
+		log.Fatalf("Facing issues while staring playwright  %v",err)
+	}
+
+	browser, err := playWrightInstance.Chromium.Launch()
+	if (err != nil) {
+		log.Fatalf("Can not start the chromium browser %v",err)
+	}
+
+	page, err := browser.NewPage()
+	if err != nil {
+		log.Fatalf("could not create page: %v", err)
+	}
+
+	page.Goto(urlInfo.Url) // navigating to the tiktok vid
+	mainFrame := page.MainFrame()
+	content,err := mainFrame.Content()
+
+	pattern := "<script id=\"SIGI_STATE\".*?>\\s*(\\{.*\\})\\s*</script>"
+	pattern_compiled, _ := regexp.Compile(pattern)
+	res := pattern_compiled.FindStringSubmatch(content)
+
+	filteredRes := utils.GetFilteredJsonData(res[1])
+	// fmt.Println(filteredRes)
+
+	var jsonData map[string] interface{} 
+
+	error := json.Unmarshal([]byte(filteredRes), &jsonData)
+	if error != nil {
+		fmt.Println(error)
+	}
+
+	// fetching the view count 
+	tiktokVideoId := utils.GetTiktokVideoId(urlInfo.Url)
+
+	rawStatData := jsonData["ItemModule"].(map[string]interface{})[tiktokVideoId].(map[string]interface{})["stats"]
+	rawViewCount := rawStatData.(map[string]interface{})["playCount"]
+	viewCount,_ := rawViewCount.(float64)
+	
+	urlInfo.Views_count = int(viewCount)
+
+
+	// fetching the channel name (in this case user name)
+	rawAuthorData := jsonData["ItemModule"].(map[string]interface{})[tiktokVideoId].(map[string]interface{})["author"]
+	authorDataString,_ := rawAuthorData.(string)
+
+	urlInfo.Channel_name = authorDataString
+
+	
+	// adding title (in this case it will be empty string)
+	urlInfo.Title = ""
+
+
+	// cleaning up everything
+	if err = browser.Close(); err != nil {
+		log.Fatalf("could not close browser: %v", err)
+	}
+	if err = playWrightInstance.Stop(); err != nil {
+		log.Fatalf("could not stop Playwright: %v", err)
+	}
 }
