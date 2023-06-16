@@ -19,6 +19,7 @@ import (
 var envFile, _ = godotenv.Read(".env")
 
 
+
 type Scrapper struct {}
 
 func (scrapper Scrapper) ScrapeYoutubeData(urlInfo *UrlInfo){
