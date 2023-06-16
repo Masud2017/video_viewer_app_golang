@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/anaskhan96/soup v1.2.5
 	github.com/gin-gonic/gin v1.9.1
+	github.com/joho/godotenv v1.5.1
 	github.com/stretchr/testify v1.8.3
 )
 

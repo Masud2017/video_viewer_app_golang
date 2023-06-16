@@ -8,7 +8,22 @@ import (
 
 func main() {
 	processor := services.UrlProcessor{}
-	fmt.Println(processor.ProcessUrl("https://www.tiktok.com/@ahmedyeasin80/video/7243647999077879041?is_from_webapp=1&sender_device=pc"))
+	scrapper := services.Scrapper {}
+	urlInfo := processor.ProcessUrl("https://www.instagram.com/reel/CoX3tHCOEUS/")
+
+	fmt.Println(urlInfo)
+
+	// scrapper.ScrapeYoutubeData(&urlInfo)
+
+	// fmt.Println("From main function : ")
+	// fmt.Println("Value of url is ; ",urlInfo.Url)
+	// fmt.Println("Value of platform name is ; ",urlInfo.Platform_name)
+	// fmt.Println("Value of views count is ; ",urlInfo.Views_count)
+	// fmt.Println("Value of title is ; ",urlInfo.Title)
+	// fmt.Println("Value of channel name is ; ",urlInfo.Channel_name)
+
+	scrapper.ScrapeInstagramData(&urlInfo)
+
 	// router := routers.SetupRouter();
 	// router.Run(":5555") // listen and serve on 0.0.0.0:8080
 
