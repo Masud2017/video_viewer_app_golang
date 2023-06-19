@@ -10,6 +10,7 @@ require (
 )
 
 require (
+	github.com/Vorkytaka/instagram-go-scraper v0.1.0 // indirect
 	github.com/bytedance/sonic v1.9.1 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/danwakefield/fnmatch v0.0.0-20160403171240-cbb64ac3d964 // indirect

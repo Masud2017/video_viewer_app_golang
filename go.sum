@@ -1,3 +1,5 @@
+github.com/Vorkytaka/instagram-go-scraper v0.1.0 h1:wKLYELCTzr1KcNeZqW6wVqN2hhqsEBB02EONCn8g2AQ=
+github.com/Vorkytaka/instagram-go-scraper v0.1.0/go.mod h1:vFasLcEZiDcY9wOYfulo125TJeYmachq+KJmIa8dIsE=
 github.com/anaskhan96/soup v1.2.5 h1:V/FHiusdTrPrdF4iA1YkVxsOpdNcgvqT1hG+YtcZ5hM=
 github.com/anaskhan96/soup v1.2.5/go.mod h1:6YnEp9A2yywlYdM4EgDz9NEHclocMepEtku7wg6Cq3s=
 github.com/bytedance/sonic v1.5.0/go.mod h1:ED5hyg4y6t3/9Ku1R6dU/4KyJ48DZ4jPhfY1O2AihPM=
